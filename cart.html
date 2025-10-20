@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EMDEN CASA STREET_RP</title>
+<style>
+body { background-color: #fff; font-family: Arial, sans-serif; padding: 20px; }
+header { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 30px; }
+header img { width: 80px; height: 80px; border-radius: 15px; }
+h1 { color: black; font-size: 28px; margin: 0; text-align: center; }
+
+.container { display: flex; justify-content: space-between; gap: 30px; flex-wrap: wrap; }
+
+.box { flex: 1; min-width: 300px; background: #f9f9f9; border-radius: 12px; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); display: none; }
+
+h2 { color: #333; margin-bottom: 15px; text-align: center; }
+
+input, textarea { width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #ccc; }
+textarea { resize: none; height: 100px; }
+
+button { width: 100%; padding: 12px; border: none; border-radius: 8px; background: #0dbf5f; color: white; font-weight: bold; cursor: pointer; transition: 0.3s; }
+button:hover { background: #08a94b; }
+
+/* محتوى القوانين */
+#rulesContent { text-align: right; max-height: 400px; overflow-y: auto; background: #fff8dc; padding: 15px; border-radius: 10px; border: 1px solid #e6d8a0; }
+</style>
+</head>
+<body>
+
+<header>
+  <img src="Capture d’écran (599).png" alt="CS Logo">
+  <h1>EMDEN CASA STREET_RP</h1>
+</header>
+
+<div class="container">
+  <!-- الهوية -->
+  <div class="box" id="identityBox" style="display:block;">
+    <h2>🆔 الهوية</h2>
+    <input type="text" id="fullName" placeholder="الاسم والنسب">
+    <input type="number" id="age" placeholder="العمر">
+    <input type="text" id="country" placeholder="الدولة">
+    <button id="submitID">إرسال الهوية</button>
+  </div>
+
+  <!-- القوانين -->
+  <div class="box" id="rulesBox">
+    <h2>📜 قوانين السيرفر</h2>
+    <div id="rulesContent">
+      🧍‍♂️ **1. الاحترام**<br>
+      احترام جميع الأعضاء بدون استثناء.<br>
+      يمنع العنصرية أو التمييز بجميع أشكاله.<br>
+      احترام الإدارة والتعامل بأدب.<br><br>
+
+      🚫 **2. السب والشتم**<br>
+      ممنوع السب أو الشتم بأي شكل.<br>
+      يمنع استخدام ألفاظ غير لائقة أو مهينة.<br><br>
+
+      📢 **3. السبام**<br>
+      ممنوع تكرار الرسائل أو الإيموجيات بشكل عشوائي.<br>
+      يمنع المنشن الجماعي بدون إذن.<br><br>
+
+      🚫 **4. الخصوصية والأمان**<br>
+      يمنع نشر أي روابط خادعة.<br>
+      يمنع طلب أو مشاركة معلومات شخصية.<br><br>
+
+      🧩 **5. السلوك داخل اللعبة**<br>
+      الالتزام بالشخصية أثناء القصة.<br>
+      يمنع الميتا قيم أو الغش.<br><br>
+
+      📷 **6. الميديا والمحتوى**<br>
+      ممنوع نشر صور أو مقاطع غير لائقة.<br>
+      المحتوى يجب أن يكون مناسب للجميع.<br><br>
+
+      🛠️ **7. الإدارة والرتب**<br>
+      يمنع طلب الرتب أو الصلاحيات.<br>
+      قرارات الإدارة نهائية.<br><br>
+
+      👥 **8. التعامل مع الأعضاء الجدد**<br>
+      يتم التعامل معهم بلطف واحترام.<br>
+    </div>
+    <button id="acceptRules">أوافق على القوانين</button>
+  </div>
+
+  <!-- التعليقات -->
+  <div class="box" id="commentBox">
+    <h2>💬 التعليقات</h2>
+    <input type="text" id="commentName" placeholder="اسمك">
+    <input type="text" id="commentID" placeholder="ID">
+    <textarea id="commentText" placeholder="تعليقك"></textarea>
+    <button id="submitComment">إرسال التعليق</button>
+  </div>
+
+  <!-- السوشيال ميديا -->
+  <div class="box" id="socialBox">
+    <h2>📱 تواصل معنا</h2>
+    <div style="display:flex; justify-content:center; gap:15px; flex-wrap:wrap; margin-top:10px;">
+      <a href="https://www.youtube.com/@casastreetemden" target="_blank" style="text-decoration:none; background:#FF0000; color:white; padding:10px 20px; border-radius:8px; font-weight:bold;">📺 YouTube</a>
+      <a href="https://discord.gg/XTtMwMyn" target="_blank" style="text-decoration:none; background:#7289DA; color:white; padding:10px 20px; border-radius:8px; font-weight:bold;">💬 Discord</a>
+      <a href="https://kick.com/y7y9" target="_blank" style="text-decoration:none; background:#FF4500; color:white; padding:10px 20px; border-radius:8px; font-weight:bold;">🎮 Kick</a>
+      <a href="https://www.instagram.com/f.lm95/" target="_blank" style="text-decoration:none; background:#C13584; color:white; padding:10px 20px; border-radius:8px; font-weight:bold;">📸 Instagram</a>
+    </div>
+  </div>
+</div>
+
+<script>
+const webhookID = "https://discord.com/api/webhooks/1429582048380846110/FgHi4A_HUfoxwMaXeFtpxahuNK9PSUwT6RnZBW1UYd5Df5AZ32HeQF6pURRLXBesvIBR";
+const webhookComment = "https://discord.com/api/webhooks/1429592119634563164/KyGgWDl8VNdAi4eNyX2KCXRcQFMbCVhf-DvjtoOOf8PhBYN-JC7ncYW4PiaAtADPcksH";
+
+// إرسال الهوية
+document.getElementById("submitID").addEventListener("click", async () => {
+  const name = document.getElementById("fullName").value.trim();
+  const age = document.getElementById("age").value.trim();
+  const country = document.getElementById("country").value.trim();
+  if(!name || !age || !country) return alert("الرجاء تعبئة جميع الحقول");
+
+  const content = `🆔 **هوية المستخدم**
+- الاسم والنسب: ${name}
+- العمر: ${age}
+- الدولة: ${country}`;
+
+  await fetch(webhookID, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({content})});
+  alert("✅ تم إرسال الهوية!");
+
+  document.getElementById("identityBox").style.display = "none";
+  document.getElementById("rulesBox").style.display = "block";
+});
+
+// الموافقة على القوانين
+document.getElementById("acceptRules").addEventListener("click", () => {
+  document.getElementById("rulesBox").style.display = "none";
+  document.getElementById("commentBox").style.display = "block";
+});
+
+// إرسال التعليقات
+document.getElementById("submitComment").addEventListener("click", async () => {
+  const cname = document.getElementById("commentName").value.trim();
+  const cid = document.getElementById("commentID").value.trim();
+  const ctext = document.getElementById("commentText").value.trim();
+  if(!cname || !cid || !ctext) return alert("الرجاء تعبئة جميع الحقول");
+
+  const content = `💬 **تعليق المستخدم**
+- الاسم: ${cname}
+- ID: ${cid}
+- التعليق: ${ctext}`;
+
+  await fetch(webhookComment, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({content})});
+  alert("✅ تم إرسال التعليق!");
+
+  document.getElementById("commentName").value = "";
+  document.getElementById("commentID").value = "";
+  document.getElementById("commentText").value = "";
+
+  // إظهار السوشيال بعد إرسال التعليق
+  document.getElementById("commentBox").style.display = "none";
+  document.getElementById("socialBox").style.display = "block";
+});
+</script>
+
+</body>
+</html>
