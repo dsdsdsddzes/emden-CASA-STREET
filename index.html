@@ -3,51 +3,208 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>طلبات الرتب وخادم CS</title>
+<title>طلبات الرتب وخادم CS - EMDEN CASA STREET_RP</title>
 <style>
-body { background-color: white; font-family: Arial, sans-serif; text-align: center; padding: 50px; }
-header { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 30px; }
-header img { width: 80px; height: 80px; border-radius: 15px; }
-h1 { color: black; font-size: 28px; margin: 0; }
-h2 { margin-top: 40px; color: black; }
-.role-btn, .role-card { display: inline-block; padding: 15px 25px; margin: 10px; border-radius: 10px; cursor: pointer; transition: 0.3s; font-weight: bold; color: white; }
-.role-btn.police { background: #007bff; }
-.role-btn.police:hover { background: #0056b3; }
-.role-btn.justice { background: #6f42c1; }
-.role-btn.justice:hover { background: #4e2a8e; }
-.role-btn.taxi { background: #ffc107; color: black; }
-.role-btn.taxi:hover { background: #e0a800; }
-.role-card.admin { background: rgba(255,0,0,0.15); color: black; border: 1px solid rgba(255,0,0,0.4);}
-.role-card.police { background: rgba(0,0,255,0.15); color: black; border: 1px solid rgba(0,0,255,0.4);}
-.role-card.central { background: rgba(255,215,0,0.15); color: black; border: 1px solid rgba(255,215,0,0.4);}
-.role-card:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(0,255,136,0.6); }
-/* زر الهوية */
-#idButton { margin-top: 30px; padding: 12px 25px; font-weight: bold; border-radius: 10px; cursor: pointer; background: #0dbf5f; color: white; border: none; transition: 0.3s; }
-#idButton:hover { background: #08a94b; }
+  :root{
+    --main-green: #0dbf5f;
+    --blue: #007bff;
+    --purple: #6f42c1;
+    --yellow: #ffc107;
+    --bg: #ffffff;
+    --text: #000;
+  }
+  html,body{height:100%;margin:0;padding:0;background:var(--bg);font-family: Arial, sans-serif;color:var(--text);direction:rtl}
+  /* ====== Sidebar (ثابت على اليمين) ====== */
+  .sidebar {
+    width: 240px;
+    background-color: #f7f7f7;
+    height: 100vh;
+    position: fixed;
+    right: 0;
+    top: 0;
+    padding: 22px;
+    box-shadow: -3px 0 10px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+    z-index: 900;
+  }
+  .sidebar h2{margin:0 0 8px 0;font-size:18px;color:#111;text-align:center}
+  .sidebar .side-btn{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:12px 14px;
+    border-radius:10px;
+    border:none;
+    cursor:pointer;
+    font-weight:700;
+    transition:0.18s;
+    text-align:right;
+  }
+  .side-btn .ico{font-size:18px}
+  .side-btn.police{background:var(--blue); color:#fff}
+  .side-btn.police:hover{filter:brightness(.95)}
+  .side-btn.justice{background:var(--purple); color:#fff}
+  .side-btn.justice:hover{filter:brightness(.95)}
+  .side-btn.taxi{background:var(--yellow); color:#111}
+  .side-btn.taxi:hover{filter:brightness(.95)}
+  .side-btn.id-btn{background:var(--main-green); color:#fff}
+  .side-btn.id-btn:hover{filter:brightness(.95)}
+
+  /* ====== Main content ====== */
+  .main{
+    margin-right:260px; /* leave space for sidebar */
+    padding:36px;
+    min-height:100vh;
+    box-sizing:border-box;
+  }
+  header{display:flex;align-items:center;gap:15px;justify-content:center;margin-bottom:18px}
+  header img{width:80px;height:80px;border-radius:14px;object-fit:cover}
+  h1{font-size:28px;margin:0}
+  h2{color:#111;margin:18px 0 8px 0}
+  .role-card{
+    display:inline-block;padding:14px 20px;margin:10px;border-radius:10px;font-weight:800;color:#000;cursor:pointer;border:1px solid transparent;
+    transition:0.22s;text-align:center;
+  }
+  .role-card.admin{background:rgba(255,0,0,0.12);border-color:rgba(255,0,0,0.25)}
+  .role-card.police{background:rgba(0,0,255,0.10);border-color:rgba(0,0,255,0.25)}
+  .role-card.central{background:rgba(255,215,0,0.10);border-color:rgba(255,215,0,0.25)}
+  .role-card:hover{transform:scale(1.04);box-shadow:0 6px 18px rgba(0,0,0,0.08)}
+
+  /* ====== Bot toggle button (دائري) ====== */
+  #bot-toggle {
+    position: fixed;
+    bottom: 22px;
+    right: 22px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--main-green);
+    color: #fff;
+    border: none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    cursor:pointer;
+    box-shadow: 0 6px 18px rgba(13,191,95,0.25);
+    z-index: 1001;
+  }
+  #bot-toggle:hover{transform:translateY(-3px);transition:0.18s}
+
+  /* ====== Chatbot container (متوسط الحجم، يظهر في الزاوية اليمنى) ====== */
+  #chatbot-wrap {
+    position: fixed;
+    bottom: 90px;
+    right: 22px;
+    width: 340px;
+    max-width: calc(100% - 48px);
+    background:#fff;
+    border:1px solid #e6e6e6;
+    border-radius:14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    z-index:1000;
+    transform-origin: bottom right;
+    animation: popIn 400ms ease;
+  }
+  @keyframes popIn{
+    from{opacity:0; transform: translateY(18px) scale(.98)}
+    to{opacity:1; transform: translateY(0) scale(1)}
+  }
+  #chatbot-header{
+    background:var(--main-green);
+    color:#fff;
+    padding:12px 14px;
+    font-weight:800;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+  }
+  #chatbot-header .title{display:flex;align-items:center;gap:8px}
+  #chatbot-messages{
+    padding:12px;
+    max-height: 260px;
+    overflow-y:auto;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    background: linear-gradient(180deg, rgba(255,255,255,1), rgba(249,249,249,1));
+  }
+  .message{
+    max-width:80%;
+    padding:10px 12px;
+    border-radius:10px;
+    line-height:1.4;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    font-size:14px;
+  }
+  .message.bot{background:#f3f3f3;color:#111;align-self:flex-start;border-top-left-radius:4px}
+  .message.user{background:var(--blue);color:#fff;align-self:flex-end;border-top-right-radius:4px}
+  #chatbot-input-area{display:flex;border-top:1px solid #eee}
+  #chatbot-input{flex:1;border:0;padding:10px 12px;font-size:14px;outline:none}
+  #chatbot-send{background:var(--main-green);border:0;color:#fff;padding:10px 14px;cursor:pointer;font-weight:700;border-radius:0 0 12px 0}
+  #chatbot-send:hover{filter:brightness(.94)}
+
+  /* responsive */
+  @media (max-width:600px){
+    .sidebar{display:none}
+    .main{margin-right:20px;padding:18px}
+    #chatbot-wrap{width:92%;right:4%}
+  }
 </style>
 </head>
 <body>
 
-<header>
-  <img src="Capture d’écran (599).png" alt="شعار CS">
-  <h1>EMDEN CASA STREET_RP</h1>
-</header>
+  <!-- ====== Sidebar (يمين) ====== -->
+  <div class="sidebar" role="navigation" aria-label="أقسام الموقع">
+    <h2>📋 الأقسام</h2>
+    <button class="side-btn police" id="side-police"><span class="ico">👮</span> قسم الشرطة</button>
+    <button class="side-btn justice" id="side-justice"><span class="ico">⚖️</span> قسم العدالة</button>
+    <button class="side-btn taxi" id="side-taxi"><span class="ico">🚕</span> قسم التاكسي</button>
+    <button class="side-btn id-btn" id="side-id"><span class="ico">🆔</span> ملف الهوية</button>
+  </div>
 
-<h2>المطور mohammed_amine95</h2>
-<h2>طلبات الرتب</h2>
-<div class="role-btn police">👮 تقديم على قسم الشرطة</div>
-<div class="role-btn justice">⚖️ تقديم على قسم العدالة</div>
-<div class="role-btn taxi">🚕 تقديم على قسم التاكسي</div>
+  <!-- ====== Main content ====== -->
+  <div class="main">
+    <header>
+      <img src="Capture d’écran (599).png" alt="شعار CS">
+      <h1>EMDEN CASA STREET_RP</h1>
+    </header>
 
-<!-- زر ملف الهوية -->
-<button id="idButton">🆔 فتح ملف الهوية</button>
+    <h2>المطور mohammed_amine95</h2>
+    <h2>طلبات الرتب</h2>
 
-<h2>الرتب في الخادم</h2>
-<div class="role-card admin" data-role="ADMIN">الإدارة<br>تحكم كامل بالخادم</div>
-<div class="role-card police" data-role="POLICE">الشرطة<br>حماية النظام وتطبيق قواعد RP</div>
-<div class="role-card central" data-role="CENTRAL BANK">البنك المركزي<br>إدارة الأموال والنفوذ</div>
+    <div style="margin-top:8px;">
+      <div class="role-card admin" data-role="ADMIN">الإدارة<br>تحكم كامل بالخادم</div>
+      <div class="role-card police" data-role="POLICE">الشرطة<br>حماية النظام وتطبيق قواعد RP</div>
+      <div class="role-card central" data-role="CENTRAL BANK">البنك المركزي<br>إدارة الأموال والنفوذ</div>
+    </div>
+  </div>
+
+  <!-- ====== Bot toggle button (دائري) ====== -->
+  <button id="bot-toggle" title="مساعد الموقع">🤖</button>
+
+  <!-- ====== Chatbot window (مفتوح تلقائيًا) ====== -->
+  <div id="chatbot-wrap" role="dialog" aria-label="بوت المساعدة">
+    <div id="chatbot-header">
+      <div class="title">🤖 مساعد EMDEN RP</div>
+      <div style="font-size:13px;opacity:.95">مفتوح</div>
+    </div>
+    <div id="chatbot-messages" aria-live="polite"></div>
+    <div id="chatbot-input-area">
+      <input id="chatbot-input" autocomplete="off" placeholder="اكتب سؤالك هنا..." />
+      <button id="chatbot-send">إرسال</button>
+    </div>
+  </div>
 
 <script>
+/* ====== Webhook constants (من كودك الأصلي) ====== */
 const webhookPolice = "https://discord.com/api/webhooks/1429589209080926462/ox8Nqt4rGBH9QAXsBjM4Dnp2XSuaBnBYjjCBFRvDdKsD8OlQRaRQIhbEXadMnKGJW54D";
 const webhookTaxi = "https://discord.com/api/webhooks/1429588956055601172/TKNtEr9p98GDuRP5ALyOjaBGen0DsRW1KdbgJvkiilScUEltihCQLDUo9W39NfT4fMo3";
 const webhookAdmin = "https://discord.com/api/webhooks/1429589541072928768/-OafCzujZV82_Jy_F7Ummm_tJ7L8lbEajoOyKX4ALyNgS5PkJDBH21uBNwwgiD0h3-8o";
@@ -55,13 +212,10 @@ const webhookCentral = "https://discord.com/api/webhooks/1429589997723582656/-Su
 const webhookJustice = "https://discord.com/api/webhooks/1429594279285620897/N8lnpW4qrB6cUciFiJ-QJtgsFfpX8hK1DLyBsFiHkszZINyuaLNRB7mMlwHwXvYDGPUD";
 const webhookID = "https://discord.com/api/webhooks/1429582048380846110/FgHi4A_HUfoxwMaXeFtpxahuNK9PSUwT6RnZBW1UYd5Df5AZ32HeQF6pURRLXBesvIBR";
 
-// زر الهوية
-document.getElementById("idButton").addEventListener("click", () => {
-  window.location.href = "cart.html";
-});
+/* ====== Sidebar button behaviors (يفتح فور الطلب بنفس الـ prompts القديمة) ====== */
+document.getElementById("side-id").addEventListener("click", ()=>{ window.location.href = "cart.html"; });
 
-// طلبات الرتب
-document.querySelector(".role-btn.police").addEventListener("click", async () => {
+document.getElementById("side-police").addEventListener("click", async ()=>{
   let name = prompt("👮 | الاسم الكامل:"); if(!name) return alert("مطلوب");
   let age = prompt("👮 | العمر:"); if(!age) return alert("مطلوب");
   let robloxName = prompt("👮 | اسم المستخدم في Roblox:"); if(!robloxName) return alert("مطلوب");
@@ -74,7 +228,6 @@ document.querySelector(".role-btn.police").addEventListener("click", async () =>
   let mic = prompt("👮 | هل لديك ميكروفون؟ (نعم/لا)"); if(!mic) return alert("مطلوب");
   let responsibility = prompt("👮 | هل أنت مستعد لتحمل المسؤولية؟"); if(!responsibility) return alert("مطلوب");
   let notes = prompt("👮 | ملاحظات إضافية (اختياري):"); if(!notes) notes="لا يوجد";
-
   const content = `👮 **طلب قسم الشرطة**
 - الاسم الكامل: ${name}
 - العمر: ${age}
@@ -88,31 +241,29 @@ document.querySelector(".role-btn.police").addEventListener("click", async () =>
 - الميكروفون: ${mic}
 - المسؤولية: ${responsibility}
 - الملاحظات: ${notes}`;
-  await fetch(webhookPolice, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({content})});
+  await fetch(webhookPolice,{method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({content})});
   alert("✅ تم إرسال طلبك للشرطة!");
 });
 
-// بقية الرتب...
-document.querySelector(".role-btn.justice").addEventListener("click", async () => {
+document.getElementById("side-justice").addEventListener("click", async ()=>{
   let name = prompt("⚖️ | الاسم الكامل:"); if(!name) return alert("مطلوب");
   let age = prompt("⚖️ | العمر:"); if(!age) return alert("مطلوب");
   let experience = prompt("⚖️ | الخبرة:"); if(!experience) return alert("مطلوب");
   let publicLaw = prompt("⚖️ | عرف القانون العام:"); if(!publicLaw) return alert("مطلوب");
   let privateLaw = prompt("⚖️ | عرف القانون الخاص:"); if(!privateLaw) return alert("مطلوب");
   let difference = prompt("⚖️ | الفرق بين القانون العام والخاص:"); if(!difference) return alert("مطلوب");
-
   const content = `⚖️ **طلب قسم العدالة**
 - الاسم: ${name}
 - العمر: ${age}
 - الخبرة: ${experience}
 - القانون العام: ${publicLaw}
 - القانون الخاص: ${privateLaw}
-- الفرق بينهما: ${difference}`;
-  await fetch(webhookJustice, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({content})});
+- الفرق: ${difference}`;
+  await fetch(webhookJustice,{method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({content})});
   alert("✅ تم إرسال طلبك للعدالة!");
 });
 
-document.querySelector(".role-btn.taxi").addEventListener("click", async () => {
+document.getElementById("side-taxi").addEventListener("click", async ()=>{
   let name = prompt("🚕 | الاسم الكامل:"); if(!name) return alert("مطلوب");
   let age = prompt("🚕 | العمر:"); if(!age) return alert("مطلوب");
   let robloxName = prompt("🚕 | اسم المستخدم في Roblox:"); if(!robloxName) return alert("مطلوب");
@@ -124,7 +275,6 @@ document.querySelector(".role-btn.taxi").addEventListener("click", async () => {
   let mic = prompt("🚕 | هل لديك ميكروفون؟ (نعم/لا)"); if(!mic) return alert("مطلوب");
   let reason = prompt("🚕 | سبب الانضمام للتاكسي:"); if(!reason) return alert("مطلوب");
   let notes = prompt("🚕 | ملاحظات إضافية (اختياري):"); if(!notes) notes="لا يوجد";
-
   const content = `🚕 **طلب قسم التاكسي**
 - الاسم الكامل: ${name}
 - العمر: ${age}
@@ -137,11 +287,11 @@ document.querySelector(".role-btn.taxi").addEventListener("click", async () => {
 - الميكروفون: ${mic}
 - السبب: ${reason}
 - الملاحظات: ${notes}`;
-  await fetch(webhookTaxi, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({content})});
+  await fetch(webhookTaxi,{method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({content})});
   alert("✅ تم إرسال طلبك للتاكسي!");
 });
 
-// طلب الرتب
+/* ====== Role card click behavior (طلبات الرتب القديمة) ====== */
 document.querySelectorAll(".role-card").forEach(btn=>{
   btn.addEventListener("click", async ()=>{
     let name = prompt(`طلب رتبة ${btn.dataset.role}\nالاسم الكامل:`); if(!name) return alert("مطلوب");
@@ -159,7 +309,98 @@ document.querySelectorAll(".role-card").forEach(btn=>{
     alert("✅ تم إرسال طلب الرتبة!");
   });
 });
-</script>
 
+/* ====== Chatbot logic (مفتوح تلقائيًا + زر إغلاق/فتح) ====== */
+const botToggle = document.getElementById("bot-toggle");
+const chatWrap = document.getElementById("chatbot-wrap");
+const chatMessages = document.getElementById("chatbot-messages");
+const chatInput = document.getElementById("chatbot-input");
+const chatSend = document.getElementById("chatbot-send");
+
+/* ردود البوت (قابلة للتوسيع) */
+const botReplies = {
+  "مرحبا":"👋 أهلاً! كيف أقدر أساعدك اليوم؟ مثلاً: كيف أقدم على الشرطة؟",
+  "سلام":"👋 وعليكم السلام! كيف أقدر أساعدك؟",
+  "شرطة":"👮 للتقديم على الشرطة: اضغط على 'قسم الشرطة' من القائمة اليمنى واملأ النموذج عند السؤال.",
+  "كيف أقدم":"👮 للشرطة: اضغط قسم الشرطة. للعدالة: اضغط قسم العدالة. للتاكسي: اضغط قسم التاكسي.",
+  "عدالة":"⚖️ للتقديم على العدالة، اضغط 'قسم العدالة' واملأ المعلومات المطلوبة.",
+  "تاكسي":"🚕 للتقديم على التاكسي، اضغط 'قسم التاكسي' واملأ الخبرة وساعات العمل.",
+  "هوية":"🆔 ملف الهوية: يحتوي بياناتك داخل السيرفر، افتحه من زر 'ملف الهوية' في القائمة.",
+  "رتب":"📋 الرتب: الإدارة - الشرطة - البنك المركزي.",
+  "شكرا":"🌷 العفو! إذا تبي مساعدة ثانية أنا هنا.",
+  "شكراً":"🌷 العفو! إذا تبي مساعدة ثانية أنا هنا.",
+  "": "❓ اكتب سؤالك وسأحاول أساعدك."
+};
+
+/* صوت ترحيب (يرفع من الإنترنت) */
+const welcomeSound = new Audio("https://cdn.pixabay.com/audio/2022/03/15/audio_8d88f9db7e.mp3");
+welcomeSound.volume = 0.7;
+
+/* دوال المراسلة داخل الشات */
+function addMessage(text, sender = 'bot'){
+  const el = document.createElement('div');
+  el.className = 'message ' + (sender === 'user' ? 'user' : 'bot');
+  el.textContent = text;
+  chatMessages.appendChild(el);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+function userSend(text){
+  if(!text) return;
+  addMessage(text, 'user');
+  const reply = generateReply(text);
+  setTimeout(()=> addMessage(reply,'bot'), 500);
+}
+function generateReply(input){
+  const lower = input.trim().toLowerCase();
+  // ابحث عن كلمة مفتاحية داخل النص
+  for(const key in botReplies){
+    if(key === "") continue;
+    if(lower.includes(key)) return botReplies[key];
+  }
+  // تطابقات بسيطة باللهجة
+  if(lower.includes('كيف') && lower.includes('أقدم')) return botReplies["كيف أقدم"];
+  return "❓ لم أفهم تماماً. جرّب سؤال مثل: 'كيف أقدم على الشرطة؟' أو اكتب 'رتب'.";
+}
+
+/* زر الإرسال والـ Enter */
+chatSend.addEventListener('click', ()=>{
+  const txt = chatInput.value.trim();
+  if(!txt) return;
+  userSend(txt);
+  chatInput.value = '';
+});
+chatInput.addEventListener('keypress', (e)=>{
+  if(e.key === 'Enter') { e.preventDefault(); chatSend.click(); }
+});
+
+/* زر الفتح/الإغلاق */
+let botOpen = true;
+botToggle.addEventListener('click', ()=>{
+  botOpen = !botOpen;
+  chatWrap.style.display = botOpen ? 'flex' : 'none';
+  botToggle.textContent = botOpen ? '🤖' : '🤖';
+  // تغيير حالة عنوان صغير في الهيدر:
+  const statusNode = document.querySelector('#chatbot-header div:nth-child(2)');
+  if(statusNode) statusNode.textContent = botOpen ? 'مفتوح' : 'مغلق';
+});
+
+/* افتح البوت تلقائيًا عند تحميل الصفحة + ترحيب مع صوت */
+window.addEventListener('load', ()=>{
+  // نظهر البوت ونجعل الحالة مفتوحة
+  chatWrap.style.display = 'flex';
+  botOpen = true;
+  try{ welcomeSound.play().catch(()=>{}); }catch(e){}
+  setTimeout(()=> addMessage("👋 أهلاً بك في موقع EMDEN CASA STREET_RP!", "bot"), 900);
+  setTimeout(()=> addMessage("💬 أنا البوت المساعد، أقدر أشرح لك كيف تقدم على الشرطة أو باقي الأقسام.", "bot"), 2200);
+});
+
+/* اختياري: إغلاق البوت عند النقر خارجه (غير مطلوب) */
+/* document.addEventListener('click', (e)=>{
+  if(!chatWrap.contains(e.target) && !botToggle.contains(e.target)){
+    chatWrap.style.display = 'none';
+    botOpen = false;
+  }
+}); */
+</script>
 </body>
 </html>
